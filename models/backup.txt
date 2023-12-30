@@ -1,0 +1,61 @@
+{% macro add_daily_date(table_name,field_name,holiday_table) %}
+  {% set loop_cnt = 5 %}
+
+
+ {{ print("Running some_macro: ") }}
+
+/*
+  {% if holiday_table is defined %}
+    {% set my_holiday_query %}
+       select * from {{ ref('holiday_table') }} 
+    {% endset %}
+  {% endif %}
+  
+{% set payment_method_query %}
+  SELECT DISTINCT  payment_method FROM {{ ref('raw_payments') }} ORDER BY 1
+{% endset %}
+
+{% set payment_methods = run_query(payment_method_query) %}
+
+{% if execute %}
+  {# Extract the payment methods from the query results #}
+  {% set payment_methods_list = payment_methods.columns[0].values() %}
+{% else %}
+  {% set payment_methods_list = [] %}
+{% endif %}
+
+*/
+
+{% endmacro %}
+
+
+============================ Running Macro ==============================
+
+{% macro add_daily_date(table_name,field_name,holiday_table) %}
+  {% set loop_cnt = 5 %}
+
+
+ {{ print("*****   Running add_daily_date :: " ~ table_name ~ "," ~ field_name ~ "," ~ holiday_table ) }}
+  Select * from public.daily_date_control 
+
+{% endmacro %}
+
+
+
+========================== Running Query ======================= 
+
+{{ add_daily_date("daily_date_control","current_date","public.holiday_lookup") }}
+{{ add_daily_date("daily_date_control","current_date") }}
+
+==================================================================================== 
+
+{% macro random_string(len) -%}{% for i in range(0,len) -%}{{ [0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f"]|random }}{% endfor %}{%- endmacro -%}
+{% macro random_guid() -%} {{ random_string(8) + "-" + random_string(4) + "-" + random_string(4) + "-" + random_string(4) + "-" + random_string(12) }}{%- endmacro -%}
+{% set myGUID = random_guid() %}
+
+
+/*c_date_list[0] ={{ c_date_list[0] + time.delta(days=1) }}  */
+
+{{% set curr_date = add_dates(curr_date) %}}
+
+{{ add_daily_date("daily_date_control1","curr_dt","public.holiday_lookup") }}

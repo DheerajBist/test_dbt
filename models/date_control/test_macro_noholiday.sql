@@ -1,0 +1,1 @@
+{{ add_daily_date("public.daily_date_control1","curr_dt") }}
